@@ -19,7 +19,14 @@ pipeline {
 
         stage('Send Notification') {
             steps {
-                echo "EMAIL WOULD BE SENT -> To: student@example.com | Subject: Build Notification: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+                mail(
+                    to: 'student@example.com',
+                    cc: 'instructor@example.com',
+                    subject: "Build Notification: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """The build for ${env.JOB_NAME} has completed.
+
+Check it here: ${env.BUILD_URL}"""
+                )
             }
         }
     }
